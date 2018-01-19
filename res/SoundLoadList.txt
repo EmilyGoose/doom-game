@@ -1,0 +1,3 @@
+gunshot//gunshot.wav
+damage//damage.wav
+death//death.wav
