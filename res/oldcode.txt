@@ -1,0 +1,96 @@
+/*
+                //Everything beyond here is broken, do not use
+
+                //This code is only here as a warning to anyone attempting this again
+
+                //Find the distance to the next horizontal intersection
+                //Add 1 to make absolutely sure we're checking the right block
+                int yA = Game.player.posY % Game.CUBE_SIZE + 1;
+
+                if (currentAngle > 180) {
+                    //If the ray is facing down we check downwards
+                    yA = Game.CUBE_SIZE - yA;
+                } else {
+                    //Y decreases as we go upwards
+                    yA *= -1;
+                }
+
+                int nextY = Game.player.posY + yA;
+
+                double firstXChange;
+                //c = b/sinθ
+                firstXChange = Math.abs(yA) / Math.sin(Math.toRadians(currentAngle));
+                int nextCoordX = Game.player.posX + (int) firstXChange;
+                int nextCoordY = Game.player.posY + yA;
+
+                int gridCoordX = Math.floorDiv(nextCoordX, Game.CUBE_SIZE);
+                int gridCoordY = Math.floorDiv(nextCoordY, Game.CUBE_SIZE);
+
+                while (inBounds(gridCoordX, gridCoordY, Game.board) && (char)Game.board[gridCoordY][gridCoordX] != 'X') {
+                    //Find the next intersection with a horizontal gridline
+                    nextCoordY += Game.CUBE_SIZE;
+                    nextCoordX += Game.CUBE_SIZE / Math.sin(Math.toRadians(currentAngle));
+
+                    gridCoordX = Math.floorDiv(nextCoordX, Game.CUBE_SIZE);
+                    gridCoordY = Math.floorDiv(nextCoordY, Game.CUBE_SIZE);
+
+                }
+
+                double yDist = Math.sqrt(Math.pow(nextCoordX - Game.player.posX, 2) + Math.pow(nextCoordY - Game.player.posY, 2));
+
+                //Start checking the nearest vertical gridline intersection
+                //Very similar to the other one except this time we're going sideways
+                //Long-ish multi-line comment so I can tell the difference
+
+                //Find the distance to the next vertical intersection
+                //Add 1 to make absolutely sure we're checking the right block
+                int xA = Game.player.posX % Game.CUBE_SIZE + 1;
+
+                if (currentAngle < 90 || currentAngle > 270) {
+                    //If the ray is facing right we check rightwards
+                    xA = Game.CUBE_SIZE - xA;
+                } else {
+                    //X decreases as we go left
+                    xA *= -1;
+                }
+
+                int nextX = Game.player.posX + xA;
+
+                double firstYChange;
+                //c = b/sinθ
+                firstYChange = Math.abs(xA) / Math.sin(Math.toRadians(currentAngle));
+                nextCoordY = Game.player.posY + (int) firstYChange;
+                nextCoordX = Game.player.posX + xA;
+
+                //I already switched these around
+                gridCoordY = Math.floorDiv(nextCoordY, Game.CUBE_SIZE);
+                gridCoordX = Math.floorDiv(nextCoordX, Game.CUBE_SIZE);
+
+
+                while (inBounds(gridCoordX, gridCoordY, Game.board) && (char)Game.board[gridCoordY][gridCoordX] != 'X') {
+                    //Find the next intersection with a horizontal gridline
+                    nextCoordX += Game.CUBE_SIZE;
+                    nextCoordY += Game.CUBE_SIZE / Math.sin(Math.toRadians(currentAngle));
+
+                    gridCoordY = Math.floorDiv(nextCoordY, Game.CUBE_SIZE);
+                    gridCoordX = Math.floorDiv(nextCoordX, Game.CUBE_SIZE);
+                }
+
+                double xDist = Math.sqrt(Math.pow(nextCoordY - Game.player.posX, 2) + Math.pow(nextCoordX - Game.player.posY, 2));
+
+                //Figure out how far it is to a wall
+                double dist = Math.min(xDist, yDist);
+
+                //Get rid of distortion caused by combining polar and cartesian coords
+                dist *= Math.cos(Math.toRadians(Math.abs(currentAngle - Game.player.viewAngle)));
+
+                System.out.println(dist);
+
+                //Draw the line on the screen
+                int line_height = (int)Math.floor((Game.CUBE_SIZE / dist) * Game.PLANE_DISTANCE);
+                System.out.println(line_height);
+                g.drawRect(i, (Game.PLANE_HEIGHT/2 - line_height/2), 1, line_height);
+
+                //Increment the current angle so we can move to checking the next one
+                currentAngle += ((double) Game.FOV / Game.PLANE_WIDTH);
+                //*/
